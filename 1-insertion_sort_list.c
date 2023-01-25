@@ -1,41 +1,41 @@
 #include "sort.h"
 
 void swap(listint_t **head, listint_t *node1, listint_t *node2);
-
 /**
- * insertion_sort_list - sorts a linked list
+ * insertion_sort_list - sorts a doubly linked list with
+ * the insertion sort algorithm
  *
- * @list: the linked list to be sorted
- * Return: Nothing.
+ * @list: list to be sorted
+ *
+ * Return: void
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *curr, *tmp;
+	listint_t *forw, *tmp;
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
-	curr = (*list)->next;
-	while (curr && curr->prev)
+	for (forw = (*list)->next; forw && forw->prev; forw = forw->next)
 	{
-		while (curr->n < curr->prev->n)
+		for (; forw && forw->prev && forw->n < forw->prev->n;
+		     forw = forw->prev)
 		{
-			tmp = curr->prev;
-			swap(list, tmp, curr);
+			tmp = forw->prev;
+			swap(list, tmp, forw);
 			print_list(*list);
-			curr = curr->prev;
+			forw = forw->next;
 		}
-		curr = curr->next;
 	}
 }
 
 /**
- * swap - swaps nodes of a linked list
- *
+ * swap - swaps two nodes
  * @head: the head node
- * @node1: the first node
- * @node2: the seconf node
- * Return: Nothing.
+ * @node1: The first node
+ * @node2: the second node
+ *
+ * Return: void
  */
 void swap(listint_t **head, listint_t *node1, listint_t *node2)
 {
